@@ -35,7 +35,7 @@ public class LoginPage extends BasePage {
     WebElement userNameValue;
 
     public LoginPage verifyUserName(String name) {
-        Assertions.assertTrue(userNameValue.getText().contains(name));
+        Assertions.assertTrue(isContainsText(name, userNameValue));
         return this;
     }
 }

@@ -1,19 +1,24 @@
 package com.demoqa.core;
 
-import org.openqa.selenium.JavascriptException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.assertj.core.api.SoftAssertions;
+import org.jspecify.annotations.NonNull;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public abstract class BasePage {
     protected WebDriver driver;
     public static JavascriptExecutor js;
+    public static SoftAssertions softly;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         js = (JavascriptExecutor) driver;
+        softly = new SoftAssertions();
     }
     public void scrollWithJS(int x, int y) {
         js.executeScript("window.scrollBy(" + x + "," + y + ")");
@@ -30,6 +35,7 @@ public abstract class BasePage {
     }
 
     public void click(WebElement element) {
+        getWait(10).until(ExpectedConditions.elementToBeClickable(element));
         element.click();
     }
     public void type(WebElement element, String text) {
@@ -38,5 +44,31 @@ public abstract class BasePage {
             element.clear();
             element.sendKeys(text);
         }
+    }
+
+    public boolean isAlertPresent (int time) {
+        Alert alert = getWait(time)
+                .until(ExpectedConditions.alertIsPresent());
+        if (alert == null) {
+            return false;
+        } else {
+            driver.switchTo().alert().accept();
+            return true;
+        }
+    }
+
+    public WebDriverWait getWait(int time) {
+        return new WebDriverWait(driver, Duration.ofSeconds(time));
+    }
+
+    public boolean isContainsText(String text, WebElement element) {
+        return element.getText().contains(text);
+    }
+
+    public boolean shouldHaveText(WebElement element, String text, int time) {
+        return getWait(time).until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
+    public boolean isContainsCssValue(String color, WebElement selectedCar, String value) {
+        return selectedCar.getCssValue(value).contains(color);
     }
 }
