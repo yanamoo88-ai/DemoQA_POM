@@ -1,0 +1,2 @@
+1007 [main] INFO  i.g.bonigarcia.wdm.WebDriverManager -- Using chromedriver 144.0.7559.109 (resolved driver for Chrome 144)
+1032 [main] INFO  i.g.bonigarcia.wdm.WebDriverManager -- Exporting webdriver.chrome.driver as C:\Users\yanam\.cache\selenium\chromedriver\win64\144.0.7559.109\chromedriver.exe
