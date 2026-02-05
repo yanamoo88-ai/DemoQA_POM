@@ -9,6 +9,7 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
     }
+
     @FindBy(css = ".card:nth-child(6)")
     WebElement bookStore;
 
@@ -30,6 +31,14 @@ public class HomePage extends BasePage {
 
     public SidePanel getWidgets() {
         clickWithJS(widgets, 0, 300);
+        return new SidePanel(driver);
+    }
+
+    @FindBy(css = ".card:nth-child(5)")
+    WebElement interaction;
+
+    public SidePanel getInteractions() {
+        clickWithJS(interaction, 0, 300);
         return new SidePanel(driver);
     }
 }

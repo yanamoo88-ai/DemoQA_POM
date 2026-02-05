@@ -3,24 +3,29 @@ package com.demoqa.core;
 import org.assertj.core.api.SoftAssertions;
 import org.jspecify.annotations.NonNull;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.swing.*;
 import java.time.Duration;
 
 public abstract class BasePage {
     protected WebDriver driver;
     public static JavascriptExecutor js;
     public static SoftAssertions softly;
+    public static Actions actions;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         js = (JavascriptExecutor) driver;
         softly = new SoftAssertions();
+        actions = new Actions(driver);
     }
     public void scrollWithJS(int x, int y) {
+        pause(1000);
         js.executeScript("window.scrollBy(" + x + "," + y + ")");
     }
 
@@ -70,5 +75,32 @@ public abstract class BasePage {
     }
     public boolean isContainsCssValue(String color, WebElement selectedCar, String value) {
         return selectedCar.getCssValue(value).contains(color);
+    }
+
+    public boolean isElementVisible(WebElement element){
+        try {
+            element.isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            e.getMessage();
+            return false;
+        }
+    }
+
+    public void waitOfElementVisibility(WebElement element, int time){
+        getWait(time).until(ExpectedConditions.visibilityOf(element));
+
+    }
+
+    public String getValue(WebElement element, String value) {
+        return element.getDomAttribute(value);
+    }
+
+    public void pause(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
