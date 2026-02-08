@@ -16,7 +16,7 @@ public class ToolTipsPage extends BasePage {
     WebElement toolTipButton;
 
     public ToolTipsPage hoverMouseOnToolTips() {
-        scrollWithJS(0,200);
+        scrollWithJS(0,200, 1000);
         actions.moveToElement(toolTipButton).perform();
         return this;
     }

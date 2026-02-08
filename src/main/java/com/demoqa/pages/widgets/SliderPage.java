@@ -16,7 +16,7 @@ public class SliderPage extends BasePage {
     WebElement rangeSlider;
 
     public SliderPage moveSlider() {
-        scrollWithJS(0, 400);
+        scrollWithJS(0, 400, 1000);
         actions.dragAndDropBy(rangeSlider, 257, 0).perform();
         return this;
     }

@@ -1,14 +1,12 @@
 package com.demoqa.core;
 
 import org.assertj.core.api.SoftAssertions;
-import org.jspecify.annotations.NonNull;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.swing.*;
 import java.time.Duration;
 
 public abstract class BasePage {
@@ -24,18 +22,18 @@ public abstract class BasePage {
         softly = new SoftAssertions();
         actions = new Actions(driver);
     }
-    public void scrollWithJS(int x, int y) {
-        pause(1000);
+    public void scrollWithJS(int x, int y, int millis) {
+        pause(millis);
         js.executeScript("window.scrollBy(" + x + "," + y + ")");
     }
 
     public void clickWithJS(WebElement element, int x, int y){
-        scrollWithJS(x,y);
+        scrollWithJS(x,y, 1000);
         click(element);
     }
 
     public void typeWithJS(WebElement element, String text, int x, int y){
-        scrollWithJS(x,y);
+        scrollWithJS(x,y, 1000);
         type(element,text);
     }
 

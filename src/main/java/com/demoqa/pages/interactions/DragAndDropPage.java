@@ -20,7 +20,7 @@ public class DragAndDropPage extends BasePage {
 
     public DragAndDropPage dragMe() {
         waitOfElementVisibility(dragMe, 20);
-        scrollWithJS(0, 500);
+        scrollWithJS(0, 500, 1000);
         actions.dragAndDrop(dragMe,dropHere).perform();
         return this;
     }
@@ -31,7 +31,7 @@ public class DragAndDropPage extends BasePage {
     }
 
     public DragAndDropPage dragMeBy() {
-        scrollWithJS(0, 400);
+        scrollWithJS(0, 400, 1000);
 
         //get coordinates dragMe(from)
         int xOffset1 = dragMe.getLocation().getX();
