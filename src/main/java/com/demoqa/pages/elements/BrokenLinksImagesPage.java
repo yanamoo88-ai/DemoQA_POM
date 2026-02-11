@@ -55,16 +55,11 @@ public class BrokenLinksImagesPage extends BasePage {
                         ("return (typeof arguments[0].naturalWidth!=undefined && arguments[0].naturalWidth>0);", image);
                 if (imageDisplayed) {
                     softly.assertThat(imageDisplayed);
-//                    System.out.println("DISPLAY -OK");
-//                    System.out.println("+++++++++++++++++++++++++++");
                 } else {
                     softly.fail("BROKEN image --> " + imageUrl);
-//                    System.out.println("DISPLAY - BROKEN");
-//                    System.out.println("+++++++++++++++++++++++");
                 }
             } catch (Exception e) {
                 softly.fail("ERROR occurred");
-//                System.out.println("ERROR occurred");
             }
         }
         softly.assertAll();

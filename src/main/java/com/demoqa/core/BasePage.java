@@ -24,34 +24,36 @@ public abstract class BasePage {
         softly = new SoftAssertions();
         actions = new Actions(driver);
     }
+
     public void scrollWithJS(int x, int y, int millis) {
         pause(millis);
         js.executeScript("window.scrollBy(" + x + "," + y + ")");
     }
 
-    public void clickWithJS(WebElement element, int x, int y){
-        scrollWithJS(x,y, 1000);
+    public void clickWithJS(WebElement element, int x, int y) {
+        scrollWithJS(x, y, 1000);
         click(element);
     }
 
-    public void typeWithJS(WebElement element, String text, int x, int y){
-        scrollWithJS(x,y, 1000);
-        type(element,text);
+    public void typeWithJS(WebElement element, String text, int x, int y) {
+        scrollWithJS(x, y, 1000);
+        type(element, text);
     }
 
     public void click(WebElement element) {
         getWait(10).until(ExpectedConditions.elementToBeClickable(element));
         element.click();
     }
+
     public void type(WebElement element, String text) {
-        if (text !=null) {
+        if (text != null) {
             click(element);
             element.clear();
             element.sendKeys(text);
         }
     }
 
-    public boolean isAlertPresent (int time) {
+    public boolean isAlertPresent(int time) {
         Alert alert = getWait(time)
                 .until(ExpectedConditions.alertIsPresent());
         if (alert == null) {
@@ -73,11 +75,12 @@ public abstract class BasePage {
     public boolean shouldHaveText(WebElement element, String text, int time) {
         return getWait(time).until(ExpectedConditions.textToBePresentInElement(element, text));
     }
+
     public boolean isContainsCssValue(String color, WebElement selectedCar, String value) {
         return selectedCar.getCssValue(value).contains(color);
     }
 
-    public boolean isElementVisible(WebElement element){
+    public boolean isElementVisible(WebElement element) {
         try {
             element.isDisplayed();
             return true;
@@ -87,7 +90,7 @@ public abstract class BasePage {
         }
     }
 
-    public void waitOfElementVisibility(WebElement element, int time){
+    public void waitOfElementVisibility(WebElement element, int time) {
         getWait(time).until(ExpectedConditions.visibilityOf(element));
 
     }
@@ -103,32 +106,31 @@ public abstract class BasePage {
             throw new RuntimeException(e);
         }
     }
+
     // find a Broken links
     public void verifyLinks(String url) {
         try {
             URL linkUrl = new URL(url);
-            //create URL connection and get response code
             HttpURLConnection connection = (HttpURLConnection) linkUrl.openConnection();
             connection.setConnectTimeout(5000);
             connection.connect();
             int statusCode = connection.getResponseCode();
             if (statusCode >= 400) {
-                //System.out.println(url + "-->" + connection.getResponseMessage() + " is a BROKEN links");
-            softly.fail(url + "-->" + connection.getResponseMessage() + " is a BROKEN links");
+
+                softly.fail(url + "-->" + connection.getResponseMessage() + " is a BROKEN links");
             } else {
-               // System.out.println(url + " --> " + connection.getResponseMessage());
                 softly.assertThat(statusCode).isLessThan(400);
             }
         } catch (Exception e) {
-            //System.out.println(url + " --> " + " ERROR occurred");
             softly.fail(url + " --> " + " ERROR occurred");
         }
     }
-    public void clickWithRectangle (WebElement element) {
+
+    public void clickWithRectangle(WebElement element) {
         Rectangle rectangle = element.getRect();
 
-        int xOffset = rectangle.getWidth()/4;
-        int yOffset = rectangle.getHeight()/2;
+        int xOffset = rectangle.getWidth() / 8;
+        int yOffset = rectangle.getHeight() / 4;
 
         actions.moveToElement(element).perform();
         actions.moveByOffset(-xOffset, -yOffset).click().perform();
