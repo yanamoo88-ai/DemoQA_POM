@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Random;
 
-public class MyListener implements WebDriverListener {
+public class MyListener implements WebDriverListener{
 
     Logger logger = LoggerFactory.getLogger(MyListener.class);
 
